@@ -84,8 +84,9 @@ describe('User', () => {
       test('should be renamed and email changed', async () => {
         const user = await User.findUserByUsername('rena')
         await user.updateNameAndEmail('Non', 'non@example.com')
-        expect(user.name).toBe('Non')
-        expect(user.email).toBe('non@example.com')
+        const updatedUser = await User.findUserByUsername('rena')
+        expect(updatedUser.name).toBe('Non')
+        expect(updatedUser.email).toBe('non@example.com')
       })
     })
   })
