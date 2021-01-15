@@ -68,4 +68,26 @@ describe('User', () => {
       })
     })
   })
+
+  describe('Create, rename and change email.', () => {
+    describe('The user', () => {
+      test('should be created', () => {
+        return new Promise((resolve) => {
+          User.createUserByEmailAndPassword('Rena Nounen', 'rena', 'rena@example.com', 'hogefugarena', 'en', function (err, userData) {
+            expect(err).toBeNull()
+            expect(userData).toBeInstanceOf(User)
+            resolve()
+          })
+        })
+      })
+
+      test('should be renamed and email changed', async () => {
+        const user = await User.findUserByUsername('rena')
+        await user.updateNameAndEmail('Non', 'non@example.com')
+        const updatedUser = await User.findUserByUsername('rena')
+        expect(updatedUser.name).toBe('Non')
+        expect(updatedUser.email).toBe('non@example.com')
+      })
+    })
+  })
 })
